@@ -8,6 +8,48 @@ public class Village {
 	private Chef chef;
 	private Gaulois[] villageois;
 	private int nbVillageois = 0;
+	private Marche marche ; 
+	
+	public class Marche{
+		private Etal[] etals ;
+		private Marche (int nbetal) {
+			etals = new Etal [nbetal];
+			for (int i = 0 ; i< nbetal ; i ++) {
+			etals[i] = new Etal ();
+		}
+	}
+	
+	public void utiliserEtal(int indiceEtal, Gaulois vendeur,String produit, int nbProduit) {
+		etals[indiceEtal].occuperEtal(vendeur, produit,nbProduit );
+	}
+	public int trouverEtalLibre() {
+		for ( int i =0 ; i < etals.length; i ++) {
+			if (!etals[i].isEtalOccupe()) {
+				return i ; 
+			}
+		}
+		return -1;
+	}
+	
+	
+	public Etal[] trouverEtals(String produit) {
+		
+		int cmp= 0 ;
+		for (int i = 0 ; etals[i].contientProduit(produit);i ++){
+			cmp ++;
+		}
+		Etal[] resultat = new Etal[cmp];
+		int in = 0 ;
+		for ( int i = 0; i<etals.length; i ++) {
+			if (etals[i].contientProduit(produit)){
+				resultat[in]=etals[i];
+						in ++; 
+			}
+		}
+		return resultat;
+	}
+	
+	
 
 	public Village(String nom, int nbVillageoisMaximum) {
 		this.nom = nom;
